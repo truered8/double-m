@@ -12,7 +12,7 @@ TODO - create files with multiple lines instead of combining entire string into 
 TODO - calibrate grbl files with hardware to ensure that the files will be printed correctly
 '''
 
-def convert_to_grbl(text):
+def convert_to_grbl(text, filename="result_grbl"):
     result = []
     end_lines = []
     shift_difference = 6
@@ -84,9 +84,10 @@ def convert_to_grbl(text):
         result.append(line)
 
     # create the final grbl file and write each line from the result to it
-    with open("result_grbl", "w") as file:
+    with open(filename, "w") as file:
         for line in result:
             file.write(line + "\n")
 
-# testing the function by combining the alphabet into one grbl file
-convert_to_grbl("abcdefghijklmnopqrstuvwxyz")
+if __name__ == "__main__":
+    # testing the function by combining the alphabet into one grbl file
+    convert_to_grbl("abcdefghijklmnopqrstuvwxyz")
