@@ -9,7 +9,7 @@ from tqdm import tqdm
  
 import serial
  
-# Example terminal cmd, ./main.py -p /dev/ttyACM0 -f [file location]
+# Example terminal cmd, ./main.py -p /dev/ttyACM0 -f [file location] -v 1
  
 PARSER = argparse.ArgumentParser(
     description='Basic GCode sender tool.')
@@ -20,7 +20,7 @@ PARSER.add_argument(
     help='Shows GCode line while sending, 0: false, other integer: true',
     type=int, required=False)
 PARSER.add_argument('-r', '--repetition', help='Number of GCode repetition',
-                    type=int, required=True)
+                    type=int, required=False)
 ARGS = PARSER.parse_args()
  
 START_TIME = time.time()
@@ -52,7 +52,7 @@ LENGTH_FILE = file_len(ARGS.file)
 # print('length: ' + str(lenght))
 # Open serial port
 # s = serial.Serial('/dev/ttyACM0',115200)
-SERIAL_CONNECTION = serial.Serial(ARGS.port, 115200)
+SERIAL_CONNECTION = serial.Serial(ARGS.port, 9600)
 print('Opening Serial Port')
  
 # Open g-code file
@@ -77,7 +77,10 @@ if ARGS.verbose:
             SERIAL_CONNECTION.write(cmd_gcode.encode() +
                                     str.encode('\n'))  # Send g-code block
             # Wait for response with carriage return
+            #print("\nbefore\n")
             grbl_out = SERIAL_CONNECTION.readline()
+            #print("\nafter\n")
+
             print(grbl_out.strip().decode("utf-8"))
     SERIAL_CONNECTION.write(str.encode('G0X0Y0Z0') + str.encode('\n'))
     print("--- %s seconds ---" % int(time.time() - START_TIME))
