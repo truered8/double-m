@@ -17,6 +17,7 @@ def convert_to_grbl(text, filename="result_grbl"):
     end_lines = []
     shift_difference = 6
     shift = 0
+    text = text[::-1]
 
     for i in range(len(text)):
         # since we do not have a file for a space character just apply the shift
