@@ -24,7 +24,7 @@ def convert_to_grbl(text, filename="result_grbl"):
             shift += shift_difference
         elif i == 0:
             # read the grbl file for the first character and split it into a list of lines
-            char = open("grbl_files/"+text[0]+"_block_0001", "r")
+            char = open("new_grbl_files/"+text[0]+"_block_0001", "r")
             char_read = char.read()
             char_split = char_read.splitlines()
 
